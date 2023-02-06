@@ -41,7 +41,7 @@ export default function handler(req, res) {
 			selected: false,
 		};
 	}
-	Array.from({ length: 55 }).forEach((el, i) => {
+	Array.from({ length: 58 }).forEach((el, i) => {
 		declarations.push(createRandomUser(i));
 	});
 

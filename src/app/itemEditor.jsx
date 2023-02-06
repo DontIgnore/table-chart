@@ -8,35 +8,30 @@ export default function ItemEditor(props) {
 
 	let data = props.item;
 
-
 	useEffect(() => setInShow(true), [data]);
-
-	const sort = (col) => {
-		// if (order == 'AZ') {
-		// 	const sorted = [...data].sort((a, b) => (a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1));
-		// 	setData(sorted);
-		// 	setOrder('ZA');
-		// }
-		// if (order == 'ZA') {
-		// 	const sorted = [...data].sort((a, b) => (a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1));
-		// 	setData(sorted);
-		// 	setOrder('AZ');
-		// }
-	};
 
 	return inShow && data ? (
 		<div className='itemExplorer'>
 			<div className='clientInfo'>
 				<div className='header'>
-					Declaration Info{' '}
-					<span
-						className='closeBtn'
-						onClick={() => {
-							setInShow(false);
-							props.setSelectedItem(false)
-						}}>
-						X
-					</span>
+					Declaration Info
+					<div className='wrap'>
+						<span
+							className='editBtn'
+							onClick={() => {
+								console.log('WOW');
+							}}>
+							edit
+						</span>
+						<span
+							className='closeBtn'
+							onClick={() => {
+								setInShow(false);
+								props.setSelectedItem(false);
+							}}>
+							X
+						</span>
+					</div>
 				</div>
 				<div className='body'>
 					<div className='body_info'>ID: {data.declarationId}</div>
@@ -51,21 +46,11 @@ export default function ItemEditor(props) {
 
 			<div className='table items'>
 				<div className='header tr'>
-					<div className='th' onClick={() => sort('name')}>
-						№
-					</div>
-					<div className='th' onClick={() => sort('name')}>
-						Name
-					</div>
-					<div className='th' onClick={() => sort('price')}>
-						Price
-					</div>
-					<div className='th' onClick={() => sort('prodicts')}>
-						Netto
-					</div>
-					<div className='th' onClick={() => sort('quantity')}>
-						Quantity
-					</div>
+					<div className='th'>№</div>
+					<div className='th'>Name</div>
+					<div className='th'>Price</div>
+					<div className='th'>Netto</div>
+					<div className='th'>Quantity</div>
 				</div>
 				{data.items.map((item, i) => {
 					return (

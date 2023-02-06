@@ -7,6 +7,7 @@ export default function SortTable(props) {
 	const [data, setData] = [props.data, props.setData];
 	const isLoading = props.isLoading;
 	const [selectedItem, setSelectedItem] = [props.selectedItem, props.setSelectedItem];
+	const [chartPage, setChartPage] = [props.chartPage, props.setChartPage];
 
 	const [order, setOrder] = useState('AZ');
 	const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
@@ -84,6 +85,7 @@ export default function SortTable(props) {
 						<div
 							onClick={() => {
 								setSelectedItem(decl);
+								setChartPage(Math.ceil((i + 1) / 10) - 1);
 							}}
 							className={`tr ${decl.selected ? 'selected' : ''}`}
 							key={decl.userId}>

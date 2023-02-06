@@ -4,7 +4,7 @@ import { useState, useEffect, useReducer } from 'react';
 
 export default function ChartElement(props) {
 	const [data, setData] = [props.data, props.setData];
-	const [chartPage, setChartPage] = useState(0);
+	const [chartPage, setChartPage] = [props.chartPage, props.setChartPage];
 	const [chartElements, setChartElements] = useState([]);
 	const [chartMax, setChartMax] = useState(0);
 	const [selectedItem, setSelectedItem] = [props.selectedItem, props.setSelectedItem];
@@ -17,12 +17,13 @@ export default function ChartElement(props) {
 		let chartList = [];
 		let max = Math.max(...data.map((o) => o.sum));
 		for (let i = offset; i < offset + 10; i++) {
-			const chart = !!data[i] ? data[i].sum : 0;
-			chartList.push({ id: i, price: chart, height: parseInt(chart / (max / 100)), selected: data[i].selected });
+			const chart = !!data[i] ? data[i] : null;
+			if (chart != null) {
+				chartList.push({ id: i, price: chart.sum, height: parseInt(chart.sum / (max / 100)), selected: selectedItem.id === chart.id });
+			}
 		}
 		setChartElements(chartList);
 		setChartMax(max);
-		console.log('!!!')
 	}, [chartPage, data, selectedItem]);
 
 	const select = (id, decl) => {
@@ -69,9 +70,12 @@ export default function ChartElement(props) {
 					</div>
 					<div className='chart_list'>
 						{chartElements.map((el) => {
+							// if (el == null) {
+							// 	return <div key={el.id} className='chart_element'></div>;
+							// }
 							return (
 								<div key={el.id} onClick={() => setSelectedItem(data[el.id])} className='chart_element'>
-									<div style={{ height: `${el.height}%` }} className={`chart_fill ${el.selected ? 'limited' : ''} ${el.price <= 1000 ? '' : 'limited'}`}>{`${el.price}$`}</div>
+									<div style={{ height: `${el.height}%` }} className={`chart_fill ${el.selected ? 'selected' : ''} ${el.price <= 1000 ? '' : 'limited'}`}>{`${el.price}$`}</div>
 								</div>
 							);
 						})}
